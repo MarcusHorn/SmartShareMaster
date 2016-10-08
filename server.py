@@ -1,7 +1,7 @@
 from flask import *
 from peewee import *
 
-app = Flask(__name__) #, static_folder='static', template_folder='.')
+app = Flask(__name__)
 
 db_rentals = SqliteDatabase('db/rentals.db')
 __datetime_frt__ = '%Y-%m-%d %H:%M:%S'
@@ -14,6 +14,7 @@ class PostedRentals(Model):
     is_vacant = IntegerField()
     location = TextField() # lat,long,altitude,heading
     price = FloatField()
+    user_key = IntegerField()
 
     class Meta:
         db_table = 'posted_rentals'
@@ -33,6 +34,20 @@ class ActiveRentals(Model):
         db_table = 'active_rentals'
         database = db_rentals
 
+@app.route('/deleterental/', methods=['POST'])
+def rmRental():
+    try:
+        user_key = request.form['user_key']
+        rentals = PostedRentals.select().where(PostedRentals.user_key == user_key)
+        print(len(rentals))
+        for rental in rentals:
+            rental.delete_instance()
+
+    except Exception as e:
+
+        print(e)
+        return 'Error occured'
+
 
 @app.route('/addrental/', methods=['POST'])
 def addRental():
@@ -44,22 +59,35 @@ def addRental():
                                 dt_end=request.form['dt_end'],
                                 is_vacant=True,
                                 location=request.form['location'],
-                                price=float(request.form['price']))
+                                price=float(request.form['price']),
+                                user_key=int(request.form['user_key']))
         
         new_rental.save()
         return 'Succesfully added a new rental!'
     except Exception as e:
         print(e)
+        return 'Error occured'
 
-    return 'Hello\n'
+@app.route('/book/', methods=['POST'])
+def bookRental():
+
+
+    return 'Hi'
 
 @app.route('/rentals/')
 def rentalsPage():
     """ Display rentals """
     str_output = ''
     for rental in PostedRentals.select():
-        str_output += '{}: {}, Available from {} to {}, {}, {}, ${}'.format(rental.id, rental.car_info, rental.dt_begin, 
-                        rental.dt_end, rental.is_vacant, rental.location, rental.price)
+        str_output += '{}: {}, Available from {} to {}, {}, {}, ${}, {}'.format(
+                        rental.id,
+                        rental.car_info,
+                        rental.dt_begin, 
+                        rental.dt_end,
+                        rental.is_vacant,
+                        rental.location,
+                        rental.price,
+                        rental.user_key)
         str_output += '<br>'
 
     return str_output
