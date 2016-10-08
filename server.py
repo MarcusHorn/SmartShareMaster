@@ -7,6 +7,7 @@ db_rentals = SqliteDatabase('db/rentals.db')
 __datetime_frt__ = '%Y-%m-%d %H:%M:%S'
 
 class PostedRentals(Model):
+    id = PrimaryKeyField()
     car_info = TextField(null=True)
     dt_begin = TextField()
     dt_end = TextField(null=True)
@@ -19,6 +20,8 @@ class PostedRentals(Model):
         database = db_rentals
 
 class ActiveRentals(Model):
+    id = PrimaryKeyField()
+    posting = IntegerField()    
     dist_travelled = FloatField(null=True)
     is_completed = IntegerField()
     is_paid = IntegerField()
@@ -30,12 +33,50 @@ class ActiveRentals(Model):
         db_table = 'active_rentals'
         database = db_rentals
 
-@app.route('/rentals/')
-def landing_page():
-    for rental in PostedRentals.select():
-        print(1)
 
-    return "It worked!"
+@app.route('/addrental/', methods=['POST'])
+def addRental():
+    """ Add a rental to the database"""
+    try:
+        print(request.form)
+        new_rental = PostedRentals(car_info=request.form['car_info'],
+                                dt_begin=request.form['dt_begin'],
+                                dt_end=request.form['dt_end'],
+                                is_vacant=True,
+                                location=request.form['location'],
+                                price=float(request.form['price']))
+        
+        new_rental.save()
+        return 'Succesfully added a new rental!'
+    except Exception as e:
+        print(e)
+
+    return 'Hello\n'
+
+@app.route('/rentals/')
+def rentalsPage():
+    """ Display rentals """
+    str_output = ''
+    for rental in PostedRentals.select():
+        str_output += '{}: {}, Available from {} to {}, {}, {}, ${}'.format(rental.id, rental.car_info, rental.dt_begin, 
+                        rental.dt_end, rental.is_vacant, rental.location, rental.price)
+        str_output += '<br>'
+
+    return str_output
+
+@app.route('/updatelocation/', methods=['POST'])
+def updateLocation():
+    if not 'location' in request.form:
+        return 'Invalid location update!'
+
+    loc = request.form['location']
+    loc_data = loc.split(',')
+    lat = float(loc_data[0])
+    lon = float(loc_data[1])
+
+
+    return str(loc_data) + '\n'
+
 
 """Launch the app and make it externally visible"""
 if __name__ == '__main__':
