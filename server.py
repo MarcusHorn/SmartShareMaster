@@ -185,24 +185,32 @@ def login():
 
 @app.route('/updatelocation/', methods=['POST'])
 def updateLocation():
-    print(requests.form)
-    if not 'location' in request.form:
-        return 'Invalid location update!'
-
-    rental_id = request.form['rental_id']
-    rental = ActiveRentals.get(ActiveRentals.posting == rental_id)
+    print(request.args)
+    print(request.form)
     
-    loc = request.form['location']
-    loc_data = loc.split(',')
-    lat = float(loc_data[0]) * 0.0166667
-    lon = float(loc_data[1]) * 0.0166667
-    alt = float(loc_data[2])
-    heading = float(loc_data[3])
+    try:
+        rental_id = int(request.form['rental_id'])
+        rental = ActiveRentals.get(ActiveRentals.posting == rental_id)
+        
+        lat = float(request.form['latitude'])
+        lon = float(request.form['longitude'])
+        alt = 0
+        heading = 0
 
-    rental.latest_loc = '{}, {}, {}, {}'.format(lat, lon, alt, heading)
-    rental.save()
+        lat /= (3.6 * (10**6) )
+        lon /= (3.6 * (10**6) )
 
-    return 'Ok'
+        lat = round(lat, 2)
+        lon = round(lon, 2)
+
+        rental.latest_loc = '{}, {}, {}, {}'.format(lat, lon, alt, heading)
+        rental.save()
+
+        return 'Ok'
+
+    except Exception as e:
+        print(e)
+        return 'Error'
 
 """Launch the app and make it externally visible"""
 if __name__ == '__main__':
