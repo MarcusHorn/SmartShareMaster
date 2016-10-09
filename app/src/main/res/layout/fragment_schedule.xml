@@ -1,0 +1,174 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/maingradient"
+    android:layout_height="match_parent"
+    tools:context="ajwadi.pits.schedule">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="WELCOME"
+                android:id="@+id/textView"
+                android:layout_centerHorizontal="true" />
+
+            <View
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textView"
+                android:background="#fff"
+                android:id="@+id/view" />
+
+            <View
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:padding="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textView1"
+                android:background="#fff" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textColor="#f1c40f"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_gravity="center_horizontal"
+                android:padding="20dp"
+                android:text="lets get you setup with the perfect ride"
+                android:id="@+id/textView1"
+                android:layout_below="@+id/textView"
+                android:layout_alignLeft="@+id/view"
+                android:layout_alignStart="@+id/view" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="When would you need it?"
+                android:paddingTop="25dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/textView3" />
+
+            <View
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textView3"
+                android:background="#fff" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="From: "/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_gravity=""
+                android:ems="10"
+                android:textAlignment="center"
+                android:id="@+id/from"
+                android:layout_weight="1"
+                android:hint="YYYY - MM - DD" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="To:     "/>
+
+
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_gravity=""
+                android:ems="10"
+                android:textAlignment="center"
+                android:id="@+id/to"
+                android:layout_weight="1"
+                android:hint="YYYY - MM - DD" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/to"
+                android:background="#fff" />
+
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Schedule"
+                android:textColor="#fff"
+                android:background="@drawable/buttongradient"
+                android:id="@+id/schedulechedule"/>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/map"
+        android:layout_gravity="bottom"
+        android:id="@+id/imageButton">
+
+    </ImageButton>
+
+
+</FrameLayout>
