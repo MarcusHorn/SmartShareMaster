@@ -1,5 +1,5 @@
 /*
- * Arduino code by Marcus Horn for
+ * Arduino code by Marcus Horn for SmartShare MHacks 8 project
  */
 
 #include <CurieBLE.h>
