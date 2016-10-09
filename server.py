@@ -55,6 +55,18 @@ def updateActiveRental():
 
     return 'Ok'
 
+# Get thee nfc code for an rental
+@app.route('/getnfccode/', methods=['POST'])
+def getRentalInfo():
+    try:
+        # TODO: Add a lot more security
+        rental = ActiveRentals.get(ActiveRentals.posting == request.form['rental_id'])
+        return rental.nfc_code
+
+    except Exception as e:
+        return 'Error: {}'.format(e)
+
+
 @app.route('/rentals/')
 def rentalsPage():
     """ Display posted rentals """
@@ -167,13 +179,13 @@ def login():
         if(user is None):
             return 'Failure!'
         
-        # return 'Welcome {}'.format(user.fullname)
         return str(user.id)
     except:
         return 'Error'
 
 @app.route('/updatelocation/', methods=['POST'])
 def updateLocation():
+    print(requests.form)
     if not 'location' in request.form:
         return 'Invalid location update!'
 
@@ -182,8 +194,8 @@ def updateLocation():
     
     loc = request.form['location']
     loc_data = loc.split(',')
-    lat = float(loc_data[0])
-    lon = float(loc_data[1])
+    lat = float(loc_data[0]) * 0.0166667
+    lon = float(loc_data[1]) * 0.0166667
     alt = float(loc_data[2])
     heading = float(loc_data[3])
 
